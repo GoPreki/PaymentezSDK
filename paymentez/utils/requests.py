@@ -45,6 +45,15 @@ def generate_token():
     return auth_token
 
 
+def generate_stoken(transaction_id: str, app_code: str, user_id: str):
+    if not Keys.SECRET_KEY:
+        raise PaymentezException(code=PaymentezErrorCode.MISSING_KEYS.value,
+                                 message='Keys were not correctly initialized')
+
+    for_md5 = f'{transaction_id}_{app_code}_{user_id}_{Keys.SECRET_KEY}'
+    return hashlib.md5(for_md5).hexdigest()
+
+
 def check_for_errors(req, res):
     if req.status_code >= 400:
         raise PaymentezException(code=req.status_code, message=res.get(
