@@ -48,18 +48,20 @@ def generate_token():
 def check_for_errors(req, res):
     if req.status_code >= 400:
         raise PaymentezException(code=req.status_code, message=res.get(
-            'help', f'Unknown Paymentez error occured: {str(res)}'), type=res.get('type'), help=res.get('help'))
+            'help', f'Unknown Paymentez error occured: {str(res)}'), type=res.get('type'), description=res.get('description'))
 
 
-def post(path=''):
-    req = requests.post(url=f'{get_base_url()}{path}', json=body, headers=form_headers())
+def post(path='', body=None):
+    req = requests.post(url=f'{get_base_url()}{path}',
+                        json=body, headers=form_headers())
     res = req.json()
     check_for_errors(req, res)
     return res
 
 
-def delete(path=''):
-    req = requests.delete(url=f'{get_base_url()}{path}', json=body, headers=form_headers())
+def delete(path='', body=None):
+    req = requests.delete(
+        url=f'{get_base_url()}{path}', json=body, headers=form_headers())
     res = req.json()
     check_for_errors(req, res)
     return res
@@ -70,7 +72,8 @@ def get(path='', path_params={}, query_params={}):
         value = quote(value)
         path = path.replace(f'/{{{key}}}', f'/{value}')
 
-    req = requests.get(url=f'{get_base_url()}{path}', headers=form_headers(), params=query_params)
+    req = requests.get(url=f'{get_base_url()}{path}',
+                       headers=form_headers(), params=query_params)
     res = req.json()
     check_for_errors(req, res)
     return res
