@@ -4,8 +4,8 @@ from enum import Enum
 
 class PaymentezException(Exception):
     code: int
-    message: str
     type: Optional[str]
+    message: str
     description: Optional[str]
 
     def __init__(self, code, message, type, description) -> None:
