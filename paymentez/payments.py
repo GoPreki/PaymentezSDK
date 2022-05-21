@@ -1,21 +1,19 @@
 from paymentez.models.order import PaymentMethod, Order
-from paymentez.models.user import User
+from paymentez.models.user import BankUser
 from paymentez.models.payment import Payment
-from paymentez.utils import optional_dict
-from paymentez.utils.exceptions import PaymentezErrorCode, PaymentezException
 from paymentez.utils.requests import get, post
 
 
-def create_payment(
+def create_bank_payment(
     id: PaymentMethod,
     bank_code: str,
     response_url: str,
-    user: User,
+    user: BankUser,
     order: Order
 ):
     body = {
         'carrier': {
-            'id': id,
+            'id': id.value,
             'extra_params': {
                 'bank_code': bank_code,
                 'response_url': response_url,
@@ -35,7 +33,7 @@ def create_payment(
         'order': order.to_dict(),
     }
 
-    return post(path='/order/', body=body)
+    return post(path='/order', body=body)
 
 
 def get_payment(order_id: str) -> Payment:

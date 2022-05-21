@@ -8,7 +8,7 @@ class PaymentezException(Exception):
     message: str
     description: Optional[str]
 
-    def __init__(self, code, message, type, description) -> None:
+    def __init__(self, code, message, type=None, description=None) -> None:
         self.code = code
         self.message = message
         self.type = type

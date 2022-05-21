@@ -25,6 +25,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class Order:
+    id: Optional[str]
     country: Country
     amount: Union[int, float]
     description: str
@@ -50,7 +51,7 @@ class Order:
             dev_reference=res.get('dev_reference'),
             amount=res.get('amount'),
             vat=res.get('vat'),
-            description=int(res['description']),
+            description=res['description'],
         )
 
 
