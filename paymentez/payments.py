@@ -33,7 +33,7 @@ def create_bank_payment(
         'order': order.to_dict(),
     }
 
-    return post(path='/order', body=body)
+    return post(path='/order/', body=body)
 
 
 def get_payment(order_id: str) -> Payment:

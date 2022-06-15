@@ -25,7 +25,6 @@ class PaymentMethod(Enum):
 
 @dataclass
 class Order:
-    id: Optional[str]
     country: Country
     amount: Union[int, float]
     description: str
