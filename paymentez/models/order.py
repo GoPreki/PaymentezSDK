@@ -33,7 +33,6 @@ class Order:
 
     def to_dict(self) -> dict:
         return optional_dict(
-            id=self.id,
             country=self.country.country,
             currency=self.country.currency,
             dev_reference=self.dev_reference,
@@ -45,12 +44,11 @@ class Order:
     @staticmethod
     def from_dict(res: dict) -> 'Order':
         return Order(
-            id=res.get('id'),
             country=Country(res.get('country'), res.get('currency')),
             dev_reference=res.get('dev_reference'),
             amount=res.get('amount'),
             vat=res.get('vat'),
-            description=int(res['description']),
+            description=res['description'],
         )
 
 
@@ -84,7 +82,7 @@ class Transaction(Order):
             description=order.description,
             dev_reference=order.dev_reference,
             vat=order.vat,
-            paid_date=isoformat_to_timestamp(res['paid_date']),
+            paid_date=isoformat_to_timestamp(res['paid_date']) if res.get('paid_date') else '',
             status=res.get('status'),
             id=res.get('id'),
             bank_url=res.get('bank_url'),
