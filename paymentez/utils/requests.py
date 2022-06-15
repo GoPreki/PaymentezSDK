@@ -38,11 +38,14 @@ def generate_token():
 
     unix_timestamp = str(int(time.time()))
     uniq_token_string = Keys.SECRET_KEY + unix_timestamp
-    uniq_token_hash = hashlib.sha256(uniq_token_string).hexdigest()
-    auth_token = b64encode('%s;%s;%s' % (
-        Keys.SERVER_APPLICATION_CODE, unix_timestamp, uniq_token_hash))
 
-    return auth_token
+    m = hashlib.sha256()
+    m.update(bytes(uniq_token_string, 'utf-8'))
+    uniq_token_hash = m.hexdigest()
+
+    auth_token = b64encode(f'{Keys.SERVER_APPLICATION_CODE};{unix_timestamp};{uniq_token_hash}'.encode("ascii"))
+
+    return auth_token.decode("ascii")
 
 
 def generate_stoken(transaction_id: str, app_code: str, user_id: str):
@@ -51,7 +54,11 @@ def generate_stoken(transaction_id: str, app_code: str, user_id: str):
                                  message='Keys were not correctly initialized')
 
     for_md5 = f'{transaction_id}_{app_code}_{user_id}_{Keys.SECRET_KEY}'
-    return hashlib.md5(for_md5).hexdigest()
+
+    m = hashlib.sha256()
+    m.update(bytes(for_md5, 'utf-8'))
+
+    return m.hexdigest()
 
 
 def check_for_errors(req, res):
@@ -80,7 +87,6 @@ def get(path='', path_params={}, query_params={}):
     for key, value in path_params.items():
         value = quote(value)
         path = path.replace(f'/{{{key}}}', f'/{value}')
-
     req = requests.get(url=f'{get_base_url()}{path}',
                        headers=form_headers(), params=query_params)
     res = req.json()
