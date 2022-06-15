@@ -63,8 +63,10 @@ def generate_stoken(transaction_id: str, app_code: str, user_id: str):
 
 def check_for_errors(req, res):
     if req.status_code >= 400:
-        raise PaymentezException(code=req.status_code, message=res.get(
-            'help', f'Unknown Paymentez error occured: {str(res)}'), type=res.get('type'), description=res.get('description'))
+        raise PaymentezException(code=req.status_code,
+                                 message=res.get('help', 'Unknown Paymentez error occured'),
+                                 type=res.get('type'),
+                                 description=res.get('description'))
 
 
 def post(path='', body=None):
