@@ -50,10 +50,11 @@ def generate_token():
 
 def check_for_errors(req, res):
     if req.status_code >= 400:
+        error = res.get('error', {}) or res
         raise PaymentezException(code=req.status_code,
-                                 message=res.get('help', 'Unknown Paymentez error occured'),
-                                 type=res.get('type'),
-                                 description=res.get('description'))
+                                 message=error.get('help', 'Unknown Paymentez error occured'),
+                                 type=error.get('type'),
+                                 description=error.get('description'))
 
 
 def post(path='', body=None):
