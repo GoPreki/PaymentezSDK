@@ -58,16 +58,14 @@ def check_for_errors(req, res):
 
 
 def post(path='', body=None):
-    req = requests.post(url=f'{get_base_url()}{path}',
-                        json=body, headers=form_headers())
+    req = requests.post(url=f'{get_base_url()}{path}', json=body, headers=form_headers())
     res = req.json()
     check_for_errors(req, res)
     return res
 
 
 def delete(path='', body=None):
-    req = requests.delete(
-        url=f'{get_base_url()}{path}', json=body, headers=form_headers())
+    req = requests.delete(url=f'{get_base_url()}{path}', json=body, headers=form_headers())
     res = req.json()
     check_for_errors(req, res)
     return res
@@ -77,8 +75,7 @@ def get(path='', path_params={}, query_params={}):
     for key, value in path_params.items():
         value = quote(value)
         path = path.replace(f'/{{{key}}}', f'/{value}')
-    req = requests.get(url=f'{get_base_url()}{path}',
-                       headers=form_headers(), params=query_params)
+    req = requests.get(url=f'{get_base_url()}{path}', headers=form_headers(), params=query_params)
     res = req.json()
     check_for_errors(req, res)
     return res

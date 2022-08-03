@@ -32,14 +32,12 @@ class Order:
     vat: Optional[Union[int, float]]
 
     def to_dict(self) -> dict:
-        return optional_dict(
-            country=self.country.country,
-            currency=self.country.currency,
-            dev_reference=self.dev_reference,
-            amount=self.amount,
-            vat=self.vat,
-            description=self.description
-        )
+        return optional_dict(country=self.country.country,
+                             currency=self.country.currency,
+                             dev_reference=self.dev_reference,
+                             amount=self.amount,
+                             vat=self.vat,
+                             description=self.description)
 
     @staticmethod
     def from_dict(res: dict) -> 'Order':
@@ -63,15 +61,16 @@ class Transaction(Order):
     ticket_id: int
 
     def to_dict(self) -> dict:
-        return {**super().to_dict(), **optional_dict(
-            paid_date=self.paid_date,
-            status=self.status,
-            id=self.id,
-            bank_url=self.bank_url,
-            status_bank=self.status_bank,
-            trazability_code=self.trazability_code,
-            ticket_id=self.ticket_id
-        )}
+        return {
+            **super().to_dict(),
+            **optional_dict(paid_date=self.paid_date,
+                            status=self.status,
+                            id=self.id,
+                            bank_url=self.bank_url,
+                            status_bank=self.status_bank,
+                            trazability_code=self.trazability_code,
+                            ticket_id=self.ticket_id)
+        }
 
     @staticmethod
     def from_dict(res: dict) -> 'Transaction':

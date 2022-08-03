@@ -14,6 +14,6 @@ setup(
     description='Python library for handling Paymentez integration',
     long_description='Python library for handling Paymentez integration',
     install_requires=[
-        'requests==2.27.0',
+        'requests >= 2.24.0',
     ],
 )
