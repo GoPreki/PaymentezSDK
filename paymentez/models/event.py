@@ -54,7 +54,7 @@ class Event:
 
     @staticmethod
     def from_dict(res: dict) -> 'Event':
-        return Event(status=WEBHOOK_PAYMENT_STATUS[res['transaction']['status']],
+        return Event(status=WEBHOOK_PAYMENT_STATUS[str(res['transaction']['status'])],
                      id=res['transaction']['id'],
                      order_description=res['transaction']['order_description'],
                      authorization_code=res['transaction']['authorization_code'],
