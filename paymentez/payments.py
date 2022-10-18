@@ -20,8 +20,8 @@ def create_bank_payment(
                 'user': {
                     'name': user.name,
                     'fiscal_number': user.fiscal_number,
-                    'type': user.type,
-                    'type_fis_number': user.type_fis_number,
+                    'type': user.type.value,
+                    'type_fis_number': user.type_fis_number.value,
                     'ip_address': user.ip_address,
                 }
             }
