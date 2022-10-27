@@ -4,13 +4,7 @@ from paymentez.models.payment import Payment
 from paymentez.utils.requests import get, post
 
 
-def create_bank_payment(
-    id: PaymentMethod,
-    bank_code: str,
-    response_url: str,
-    user: BankUser,
-    order: Order
-):
+def create_bank_payment(id: PaymentMethod, bank_code: str, response_url: str, user: BankUser, order: Order):
     body = {
         'carrier': {
             'id': id.value,

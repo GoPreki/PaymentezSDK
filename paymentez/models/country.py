@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
 class Country:
-    country: str
-    currency: str
+    country: Optional[str]
+    currency: Optional[str]

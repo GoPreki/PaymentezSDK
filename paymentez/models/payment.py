@@ -13,8 +13,8 @@ class Payment:
     @staticmethod
     def from_dict(res: dict) -> 'Payment':
         return Payment(
-            application_code=res.get('application', {}).get('code'),
-            commerce_merchant_id=res.get('commerce', {}).get('merchant_id'),
-            user=BaseUser.from_dict(res.get('user')),
-            transaction=Transaction.from_dict(res.get('transaction')),
+            application_code=res['application']['code'],
+            commerce_merchant_id=res['commerce']['merchant_id'],
+            user=BaseUser.from_dict(res['user']),
+            transaction=Transaction.from_dict(res['transaction']),
         )
