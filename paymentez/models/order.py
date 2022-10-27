@@ -67,10 +67,10 @@ class Transaction(Order):
     def to_dict(self) -> dict:
         return {
             **super().to_dict(), 'paid_date': self.paid_date,
-            'status': self.status,
+            'status': self.status.value,
             'id': self.id,
             'bank_url': self.bank_url,
-            'status_bank': self.status_bank,
+            'status_bank': self.status_bank.value,
             'trazability_code': self.trazability_code,
             'ticket_id': self.ticket_id
         }
